@@ -932,6 +932,34 @@ const listenForDevMode = () => {
         }
     })
 }
+        // CPU 3 hand and positioning
+        const cpu3Hand = []
+        const cpu3HandDom = document.querySelector('.cpu3-hand')
+        
+        // Position CPU3 on right side
+        cpu3HandDom.style.right = '20px'
+        cpu3HandDom.style.top = '50%'
+        cpu3HandDom.style.transform = 'translateY(-50%) rotate(-90deg)'
+        
+        const cpu3ScoreDom = document.querySelector('#cpu3-score')
+        const cpu3Uno = document.querySelector('.cpu3-animation')
+        let cpu3Score = 0
+
+        // Position score display
+        cpu3ScoreDom.style.right = '40px'
+        cpu3ScoreDom.style.top = '20%'
+
+        if (key === '3') {
+            drawCard(cpu3Hand)
+            updateHand(cpu3Hand)
+        }
+
+        // Add score control for testing
+        if (key === ']') {
+            cpu3Score += 10
+            updateScores()
+        }
+
         // CPU 2 hand and positioning
         const cpu2Hand = []
         const cpu2HandDom = document.querySelector('.cpu2-hand')
