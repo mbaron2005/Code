@@ -992,6 +992,68 @@ const listenForDevMode = () => {
             updateScores()
         }
 
+// Initialize remaining game state variables
+let currentPlayer = 'player';
+let direction = 1; // 1 for clockwise, -1 for counter-clockwise
+let gameActive = false;
+
+// Shuffle deck using Fisher-Yates algorithm
+function shuffleDeck() {
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+}
+
+// Deal initial hands
+function dealInitialHands() {
+    // Clear existing hands first
+    playerHand.length = 0;
+    cpuHand.length = 0;
+    cpu2Hand.length = 0;
+    cpu3Hand.length = 0;
+    
+    // Deal 7 cards to each player
+    for (let i = 0; i < 7; i++) {
+        drawCard(playerHand);
+        drawCard(cpuHand);
+        drawCard(cpu2Hand);
+        drawCard(cpu3Hand);
+    }
+    
+    // Clear and initialize discard pile
+    discardPile.length = 0;
+    discardPile.push(deck.pop());
+    
+    // Update all hands and game display
+    updateHand(playerHand);
+    updateHand(cpuHand);
+    updateHand(cpu2Hand);
+    updateHand(cpu3Hand);
+    updateDiscardPile();
+}
+
+// Update discard pile display
+function updateDiscardPile() {
+    if (discardPile.length === 0) return;
+    
+    const topCard = discardPile[discardPile.length - 1];
+    const discardPileElement = document.querySelector('.discard-pile');
+    if (discardPileElement) {
+        discardPileElement.className = `card ${topCard.color} ${topCard.value}`;
+    }
+}
+
+// Start game function
+function startGame() {
+    gameActive = false; // Reset game state
+    shuffleDeck();
+    dealInitialHands();
+    gameActive = true;
+    currentPlayer = 'player';
+    direction = 1;
+    updateScores(); // Ensure scores are reset and displayed
+}
 
 
 
